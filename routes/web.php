@@ -11,12 +11,6 @@
 |
 */
 
-Route::group(['domain' => env('APP_2URL')], function(){
-    Route::get('/', function () {
-        return view('subdomain');
-    });
-});
-
 Route::get('/', function () {
     return view('default');
 });

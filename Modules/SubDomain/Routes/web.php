@@ -11,6 +11,8 @@
 |
 */
 
-Route::prefix('subdomain')->group(function() {
-    Route::get('/', 'SubDomainController@index');
+Route::group(['domain' => env('APP_2URL')], function(){
+    Route::get('/', function () {
+        return view('subdomain');
+    });
 });
