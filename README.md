@@ -79,3 +79,37 @@ And now both previously working routes provide the default content, not the expe
 |                       | GET|HEAD | api/user      |      | Closure | api,auth:api |
 +-----------------------+----------+---------------+------+---------+--------------+
 ```
+
+## last confusing fact
+
+Thinking about Laravel mixing up routes totally, I tried to additionally add the `/` route for the primary URL to the module – and now the main `routes/web.php` doesn't do anything anymore.
+
+So ... let's write down the configs:
+
+```php
+<?php
+
+// routes/web.php
+
+Route::get('/', function () {
+    return view('default');
+});
+```
+
+```php
+<?php
+
+// Modules/SubDomain/Routes/web.php
+
+Route::group(['domain' => env('APP_2URL')], function(){
+    Route::get('/', function () {
+        return view('subdomain');
+    });
+});
+
+Route::get('/', function () {
+    return view('subdomain2');
+});
+```
+
+With this configuration, both – `example.com` and `subdomain.example.com` – show up the `subdomain2`-View ... now, the newly added `/` route overrides every route defined until now.
